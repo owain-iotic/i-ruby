@@ -9,6 +9,11 @@ ARG ADDITIONAL_PACKAGE
 RUN apt-get update \
   && apt-get install -qy --no-install-recommends ${ADDITIONAL_PACKAGE}
 
+COPY openapi_client-1.0.0.gem /tmp
+RUN apt install -y clang make ruby-dev libffi-dev gcc && \
+    gem install ffi && \
+    gem install /tmp/openapi_client-1.0.0.gem
+
 WORKDIR /home/app
 
 COPY Gemfile    		.
